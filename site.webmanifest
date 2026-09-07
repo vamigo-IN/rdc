@@ -1,0 +1,21 @@
+{
+  "name": "Roots Dental Care",
+  "short_name": "Roots Dental",
+  "description": "Multi-specialty dental clinic in Althan, Surat.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0E7C86",
+  "icons": [
+    {
+      "src": "/assets/img/favicon-64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/logo.png",
+      "sizes": "480x480",
+      "type": "image/png"
+    }
+  ]
+}

@@ -8,7 +8,7 @@ Service + FAQPage + BreadcrumbList). Re-run any time content changes."""
 
 import os
 
-SITE = "https://www.rootsdentalcare.in"
+SITE = "https://rootsdentalcaresurat.com"
 PHONE_TEL = "+917990376179"
 PHONE_DISPLAY = "79903 76179"
 OFFER = "This month: free consultation + digital X-ray"
@@ -141,9 +141,10 @@ def why(d):
 
 def specialist(d):
     s = d["specialist"]
+    portrait = " clinic-photo-portrait" if "/doctors/" in s["img"] else ""
     return f'''<section class="block clinic-band">
   <div class="wrap clinic-grid">
-    <div class="clinic-photo reveal"><img src="{s["img"]}" alt="{esc(s["alt"])}" loading="lazy"></div>
+    <div class="clinic-photo{portrait} reveal"><img src="{s["img"]}" alt="{esc(s["alt"])}" loading="lazy"></div>
     <div class="clinic-copy reveal">
       <span class="eyebrow">{esc(s["eyebrow"])}</span>
       <h2>{esc(s["name"])}</h2>
@@ -562,7 +563,7 @@ SERVICES = [
     ("Priced up front, EMI available","You get the full plan and cost before starting, with 0% EMI to spread a full makeover."),
   ],
   "specialist":{
-    "img":"/assets/img/clinic-2.jpg","alt":"Smile design and cosmetic dentistry at Roots Dental Care, Althan, Surat",
+    "img":"/assets/img/clinic-1.jpg","alt":"Smile design and cosmetic dentistry at Roots Dental Care, Althan, Surat",
     "eyebrow":"How we work","name":"Designed digitally, done by specialists",
     "role":"Digital smile design at a multi-specialty clinic",
     "bio":"A great smile has to be built on healthy teeth. Because Roots is a full multi-specialty clinic, your smile design is planned around what your teeth actually need, whitening and veneers where that is enough, and the right specialist on hand when a tooth needs treating first. You see the plan, and the preview, before anything begins.",

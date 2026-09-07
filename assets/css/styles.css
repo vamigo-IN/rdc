@@ -402,6 +402,8 @@ body.sheet-lock{overflow:hidden;}
 .clinic-grid{display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center;}
 .clinic-photo{border-radius:14px; overflow:hidden; box-shadow:var(--glass-shadow); border:1px solid var(--line);}
 .clinic-photo img{width:100%; height:100%; object-fit:cover; display:block; aspect-ratio:4/3;}
+.clinic-photo-portrait img{aspect-ratio:4/5; object-position:center 14%; background:linear-gradient(160deg,#E4F1F1,#CFE7E7);}
+@media(max-width:820px){ .clinic-photo-portrait img{aspect-ratio:1/1;} }
 .clinic-copy h2{margin-bottom:14px;}
 .clinic-list{display:flex; flex-direction:column; gap:14px; margin-top:18px;}
 .clinic-list .ci{display:flex; gap:12px; align-items:flex-start;}

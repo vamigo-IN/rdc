@@ -48,7 +48,16 @@ def header():
     </a>
     <nav class="nav-links" id="nav-links">
       <a href="/">Home</a>
-      <a href="/#services">Treatments</a>
+      <div class="nav-dd">
+        <a href="/#services" class="nav-dd-t">Services</a>
+        <div class="nav-dd-menu">
+          <a href="/general-dentistry/">General Dentistry</a>
+          <a href="/root-canal/">Root Canal</a>
+          <a href="/dental-implants/">Dental Implants</a>
+          <a href="/smile-design/">Smile Design &amp; Cosmetic</a>
+          <a href="/kids-dentistry/">Kids' Dentistry</a>
+        </div>
+      </div>
       <a href="/#doctors">Doctors</a>
       <a href="#faq">FAQ</a>
       <a href="#location">Location</a>
@@ -268,7 +277,6 @@ def footer():
   </div>
   <div class="wrap f-bot">
     <span>© <span id="year">2026</span> Roots Dental Care. All rights reserved.</span>
-    <span><a href="/privacy.html" style="color:#B9D9D7;">Privacy Policy</a></span>
     <span class="powered">Powered by <a href="https://growclinic.io" target="_blank" rel="noopener">GrowClinic.io</a></span>
   </div>
 </footer>'''

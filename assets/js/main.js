@@ -38,26 +38,29 @@
     appsScriptUrl: ""
   };
 
-  // Save a lead as a row in the Google Sheet via Apps Script (fire-and-forget).
-  // Uses text/plain + no-cors so it works cross-origin from static hosting.
+  // Save a lead as a row in the Google Sheet via Apps Script.
+  // Returns a Promise that resolves once the request has completed (the row is
+  // written) — so the caller can wait for it before moving on. Uses text/plain +
+  // no-cors so it works cross-origin from static hosting. A 8s timeout means a
+  // stuck network never traps the visitor.
   function sendToSheet(data) {
-    if (!CONFIG.appsScriptUrl) return; // sheet logging skipped until URL is set
-    try {
-      fetch(CONFIG.appsScriptUrl, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({
-          name: data.name,
-          phone: data.phone,
-          treatment: data.treatment,
-          time: data.time,
-          page: (document.title || "") ,
-          url: location.href,
-          source: data.source || ""
-        })
-      });
-    } catch (e) { /* non-blocking */ }
+    if (!CONFIG.appsScriptUrl) return Promise.resolve(); // logging off until URL set
+    var req = fetch(CONFIG.appsScriptUrl, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        name: data.name,
+        phone: data.phone,
+        treatment: data.treatment,
+        time: data.time,
+        page: (document.title || ""),
+        url: location.href,
+        source: data.source || ""
+      })
+    }).catch(function () { /* network error — don't block the lead */ });
+    var timeout = new Promise(function (res) { setTimeout(res, 8000); });
+    return Promise.race([req, timeout]);
   }
 
   // Inject GA4 / Google Ads / Meta only when an ID is set.
@@ -132,6 +135,8 @@
   }
 
   // Works for BOTH the popup form and the inline fallback form (fields by name).
+  // The lead is saved to the Google Sheet FIRST; WhatsApp opens only after that
+  // request has completed, so the row is never lost if the visitor leaves.
   function handleSubmit(e) {
     e.preventDefault();
     var form = e.currentTarget;
@@ -157,15 +162,24 @@
       source: src
     };
 
-    sendToSheet(data);   // save to Google Sheet (Apps Script)
-    sendEmail(data);
-    track("lead_submit");
+    // Button "Sending…" state while the row is written.
+    var btn = form.querySelector('button[type="submit"]');
+    var btnHtml = btn ? btn.innerHTML : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
 
-    var okBox = form.parentNode.querySelector(".form-ok");
-    if (okBox) okBox.style.display = "block";
+    function proceed() {
+      sendEmail(data);
+      track("lead_submit");
+      var okBox = form.parentNode.querySelector(".form-ok");
+      if (okBox) okBox.style.display = "block";
+      if (btn) { btn.disabled = false; btn.innerHTML = btnHtml; }
+      try { form.reset(); } catch (_) {}
+    }
 
-    var url = "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(buildMessage(data));
-    window.open(url, "_blank");
+    // Save the lead to the sheet (+ email), then show the confirmation.
+    // No WhatsApp redirect. Resolves either way (success, network error, or the
+    // 8s timeout) so the visitor always sees the confirmation.
+    sendToSheet(data).then(proceed, proceed);
   }
 
   // Track taps on any WhatsApp / call button too.

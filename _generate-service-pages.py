@@ -84,7 +84,7 @@ def hero(d):
       <p class="hero-sub">{d["hero_sub"]}</p>
       <div class="hero-cta">
         <a href="tel:{PHONE_TEL}" class="btn btn-glass">Call {PHONE_DISPLAY}</a>
-        <a href="#book-inline" class="btn btn-red" data-open-book>Book on WhatsApp</a>
+        <a href="#book-inline" class="btn btn-red" data-open-book>Book appointment</a>
       </div>
     </div>
     <div class="hero-form" id="book-hero">
@@ -99,9 +99,9 @@ def hero(d):
         <div class="field"><label for="fh-treatment">What do you need?</label>
           <select id="fh-treatment" name="treatment">{sel(d["treatment"], "fh")}</select>
         </div>
-        <button type="submit" class="btn btn-red">Book on WhatsApp {WA_ARROW}</button>
+        <button type="submit" class="btn btn-red">Book appointment {WA_ARROW}</button>
       </form>
-      <div class="form-ok">Opening WhatsApp with your details. If it doesn't open, call us at <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY.replace(" ","&nbsp;")}</a>.</div>
+      <div class="form-ok">Thank you. We have your details and will call or message you shortly. Prefer to talk now? Call <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY.replace(" ","&nbsp;")}</a>.</div>
       <p class="form-note">No pressure, no upselling. We only suggest what your teeth actually need.</p>
     </div>
   </div>
@@ -246,9 +246,9 @@ def bookinline(d):
         <div class="field"><label for="fi-time">Preferred time</label>
           <select id="fi-time" name="time"><option>Any time works</option><option>Morning (10am to 1pm)</option><option>Afternoon (1pm to 5pm)</option><option>Evening (5pm to 8pm)</option></select>
         </div>
-        <button type="submit" class="btn btn-red">Book on WhatsApp {WA_ARROW}</button>
+        <button type="submit" class="btn btn-red">Book appointment {WA_ARROW}</button>
       </form>
-      <div class="form-ok">Opening WhatsApp with your details. If it doesn't open, call us at <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY.replace(" ","&nbsp;")}</a>.</div>
+      <div class="form-ok">Thank you. We have your details and will call or message you shortly. Prefer to talk now? Call <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY.replace(" ","&nbsp;")}</a>.</div>
       <p class="form-note">No pressure, no upselling. We only suggest what your teeth actually need.</p>
     </div>
   </div>
@@ -314,9 +314,9 @@ def sheet(d):
       <div class="field"><label for="f-time">Preferred time</label>
         <select id="f-time" name="time"><option>Any time works</option><option>Morning (10am-1pm)</option><option>Afternoon (1pm-5pm)</option><option>Evening (5pm-8pm)</option></select>
       </div>
-      <button type="submit" class="btn btn-red">Book on WhatsApp {WA_ARROW}</button>
+      <button type="submit" class="btn btn-red">Book appointment {WA_ARROW}</button>
     </form>
-    <div class="form-ok" id="form-ok">Opening WhatsApp with your details… if it doesn't open, call us at <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY.replace(" ","&nbsp;")}</a>.</div>
+    <div class="form-ok" id="form-ok">Thank you. We have your details and will call or message you shortly. Prefer to talk now? Call <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY.replace(" ","&nbsp;")}</a>.</div>
     <p class="form-note">No pressure, no upselling, we only suggest what your teeth actually need.</p>
   </div>
 </div>'''
@@ -408,7 +408,7 @@ SERVICES = [
 {
   "slug":"general-dentistry","short":"check-up","treatment":"Check-up & cleaning",
   "title":"General Dentistry in Althan, Surat | Roots Dental Care",
-  "meta":"Gentle general dentistry in Althan, Surat, check-ups, scaling and polishing, tooth-coloured fillings and sensitivity care, most in a single visit. Free consultation and digital X-ray this month. Book on WhatsApp.",
+  "meta":"Gentle general dentistry in Althan, Surat, check-ups, scaling and polishing, tooth-coloured fillings and sensitivity care, most in a single visit. Free consultation and digital X-ray this month. Book appointment.",
   "og":"Check-ups, cleaning, fillings and sensitivity care, done gently and priced up front, in Althan, Surat.",
   "h1_main":"General Dentistry in","h1_accent":"Althan, Surat",
   "hero_sub":"Check-ups, cleaning, fillings and sensitivity care, done gently, priced up front, most finished in a single visit.",
@@ -452,7 +452,7 @@ SERVICES = [
 {
   "slug":"root-canal","short":"root canal","treatment":"Root canal",
   "title":"Painless Root Canal in Althan, Surat | Roots Dental Care",
-  "meta":"Microscope-guided root canal treatment in Althan, Surat, often in a single sitting and far more comfortable than its reputation. Save your natural tooth. Free consultation and digital X-ray. Book on WhatsApp.",
+  "meta":"Microscope-guided root canal treatment in Althan, Surat, often in a single sitting and far more comfortable than its reputation. Save your natural tooth. Free consultation and digital X-ray. Book appointment.",
   "og":"Microscope-guided root canal in Althan, Surat, often a single sitting, and far gentler than its reputation.",
   "h1_main":"Painless Root Canal in","h1_accent":"Althan, Surat",
   "hero_sub":"Microscope-guided, often finished in a single sitting, and far gentler than the reputation would have you believe.",
@@ -496,7 +496,7 @@ SERVICES = [
 {
   "slug":"dental-implants","short":"implant","treatment":"Dental implant / missing tooth",
   "title":"Dental Implants in Althan, Surat | Roots Dental Care",
-  "meta":"Dental implants in Althan, Surat by an implantologist with 5000+ implants placed. Single tooth to full-mouth fixed teeth, bone grafting in-house, 0% EMI. Free consultation and digital X-ray. Book on WhatsApp.",
+  "meta":"Dental implants in Althan, Surat by an implantologist with 5000+ implants placed. Single tooth to full-mouth fixed teeth, bone grafting in-house, 0% EMI. Free consultation and digital X-ray. Book appointment.",
   "og":"Dental implants in Althan, Surat, single tooth to full-mouth fixed teeth, 5000+ placed, 0% EMI.",
   "h1_main":"Dental Implants in","h1_accent":"Althan, Surat",
   "hero_sub":"Replace missing teeth for good, single tooth to full-mouth fixed teeth, with 5,000+ implants placed and 0% EMI.",
@@ -540,7 +540,7 @@ SERVICES = [
 {
   "slug":"smile-design","short":"smile","treatment":"Smile design / whitening",
   "title":"Smile Design & Veneers in Althan, Surat | Roots Dental Care",
-  "meta":"Smile makeovers in Althan, Surat, veneers, teeth whitening and digital smile design. See your new smile on screen before we begin. Natural, colour-matched results. Free consultation. Book on WhatsApp.",
+  "meta":"Smile makeovers in Althan, Surat, veneers, teeth whitening and digital smile design. See your new smile on screen before we begin. Natural, colour-matched results. Free consultation. Book appointment.",
   "og":"Veneers, whitening and digital smile design in Althan, Surat, see your new smile before we begin.",
   "h1_main":"Smile Design in","h1_accent":"Althan, Surat",
   "hero_sub":"Veneers, whitening and digital smile design, see your new smile on screen before we touch a single tooth.",
@@ -584,7 +584,7 @@ SERVICES = [
 {
   "slug":"kids-dentistry","short":"child's","treatment":"My child's teeth",
   "title":"Kids' Dentistry in Althan, Surat | Roots Dental Care",
-  "meta":"Child-friendly pediatric dentistry in Althan, Surat. Gentle check-ups, cavity fillings, fluoride and sealants, and calm care for anxious children, led by an MDS pediatric dentist. Free consultation. Book on WhatsApp.",
+  "meta":"Child-friendly pediatric dentistry in Althan, Surat. Gentle check-ups, cavity fillings, fluoride and sealants, and calm care for anxious children, led by an MDS pediatric dentist. Free consultation. Book appointment.",
   "og":"Gentle pediatric dentistry in Althan, Surat, led by an MDS pediatric dentist. Calm care for anxious kids.",
   "h1_main":"Kids' Dentistry in","h1_accent":"Althan, Surat",
   "hero_sub":"Gentle, unhurried care that keeps children calm, from the first visit to fillings, fluoride and sealants.",

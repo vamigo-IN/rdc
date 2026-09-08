@@ -27,8 +27,38 @@
     metaPixelId: "",        // e.g. "1234567890"    (optional, Meta/Facebook)
     // The conversion action to fire when someone submits the form / taps
     // WhatsApp / calls. From Google Ads: "AW-XXXXXXXXXX/AbCdEf_gHi".
-    googleAdsConversion: ""
+    googleAdsConversion: "",
+
+    // ---- Google Sheet logging (Apps Script) ----
+    // Every form submission is saved as a row in your Google Sheet.
+    // 1) In your Sheet: Extensions -> Apps Script, paste the doPost code
+    //    (see APPSCRIPT-SETUP.md), Deploy -> New deployment -> Web app,
+    //    "Execute as: Me", "Who has access: Anyone", then copy the /exec URL.
+    // 2) Paste that URL below. Leave blank to skip sheet logging.
+    appsScriptUrl: ""
   };
+
+  // Save a lead as a row in the Google Sheet via Apps Script (fire-and-forget).
+  // Uses text/plain + no-cors so it works cross-origin from static hosting.
+  function sendToSheet(data) {
+    if (!CONFIG.appsScriptUrl) return; // sheet logging skipped until URL is set
+    try {
+      fetch(CONFIG.appsScriptUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          name: data.name,
+          phone: data.phone,
+          treatment: data.treatment,
+          time: data.time,
+          page: (document.title || "") ,
+          url: location.href,
+          source: data.source || ""
+        })
+      });
+    } catch (e) { /* non-blocking */ }
+  }
 
   // Inject GA4 / Google Ads / Meta only when an ID is set.
   function loadAnalytics() {
@@ -115,13 +145,19 @@
     if (!ok) { (name.value.trim() ? phone : name).focus(); return; }
 
     var tEl = form.querySelector('[name="treatment"]'), timeEl = form.querySelector('[name="time"]');
+    // Which form on the page it came from, for lead attribution in the sheet.
+    var src = form.closest("#booking") ? "Popup" :
+              form.closest("#book-hero") ? "Hero form" :
+              form.closest("#book-inline") ? "Inline form" : "Form";
     var data = {
       name: name.value.trim(),
       phone: digits,
       treatment: (tEl && tEl.value) || "General enquiry",
-      time: (timeEl && timeEl.value) || "Any time"
+      time: (timeEl && timeEl.value) || "Any time",
+      source: src
     };
 
+    sendToSheet(data);   // save to Google Sheet (Apps Script)
     sendEmail(data);
     track("lead_submit");
 
@@ -172,16 +208,14 @@
     document.querySelectorAll("a[data-wa]").forEach(function (a) { a.setAttribute("href", base); });
   }
 
-  // Booking bottom sheet: opens on any [data-open-book] click and once on scroll.
+  // Booking bottom sheet: opens ONLY on a [data-open-book] ("Book appointment") click.
   function wireSheet() {
     var sheet = $("#booking"), backdrop = $("#sheet-backdrop"), closeBtn = $("#sheet-close");
     if (!sheet || !backdrop) return;
     sheet.removeAttribute("hidden");
     backdrop.removeAttribute("hidden");
-    var touched = false, autoDone = false;
 
     function open() {
-      touched = true;
       backdrop.classList.add("open");
       sheet.classList.add("open");
       document.body.classList.add("sheet-lock");
@@ -206,12 +240,7 @@
     if (closeBtn) closeBtn.addEventListener("click", close);
     backdrop.addEventListener("click", close);
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
-
-    // Slide up once, on its own, after the visitor scrolls past the hero.
-    window.addEventListener("scroll", function () {
-      if (autoDone || touched) return;
-      if (window.scrollY > window.innerHeight * 0.9) { autoDone = true; open(); }
-    }, { passive: true });
+    // The popup opens ONLY on a "Book appointment" click — no auto-open on scroll.
   }
 
   // Scroll the visitor to the always-present inline booking form.

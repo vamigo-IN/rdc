@@ -372,7 +372,7 @@ def head(d):
 <title>{esc(d["title"])}</title>
 <meta name="description" content="{esc(d["meta"])}">
 <link rel="canonical" href="{url}">
-<meta name="theme-color" content="#0E7C86">
+<meta name="theme-color" content="#006D75">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Roots Dental Care">
 <meta property="og:title" content="{esc(d["title"])}">
@@ -413,7 +413,7 @@ SERVICES = [
   "h1_main":"General Dentistry in","h1_accent":"Althan, Surat",
   "hero_sub":"Check-ups, cleaning, fillings and sensitivity care, done gently, priced up front, most finished in a single visit.",
   "eyebrow":"General & preventive dentistry",
-  "stats":[("Same day","Most check-ups & fillings"),("Digital","X-rays on site"),("0%","EMI available"),("1700+","Families treated")],
+  "stats":[("Same day","Most check-ups & fillings"),("Digital","X-rays on site"),("No-cost","EMI available"),("2000+","Families treated")],
   "incl_head":"Everything your routine dental care needs",
   "incl_intro":"The everyday treatments that keep small problems small, under one roof, by the doctor who trained for it.",
   "included":[
@@ -457,7 +457,7 @@ SERVICES = [
   "h1_main":"Painless Root Canal in","h1_accent":"Althan, Surat",
   "hero_sub":"Microscope-guided, often finished in a single sitting, and far gentler than the reputation would have you believe.",
   "eyebrow":"Microscopic endodontics",
-  "stats":[("Single","sitting, most cases"),("Microscope","guided precision"),("Save","the natural tooth"),("0%","EMI available")],
+  "stats":[("Single","sitting, most cases"),("Microscope","guided precision"),("Save","the natural tooth"),("No-cost","EMI available")],
   "incl_head":"A root canal done properly, and comfortably",
   "incl_intro":"Done under magnification by an endodontist, so the tooth is cleaned thoroughly the first time, and lasts.",
   "included":[
@@ -472,19 +472,19 @@ SERVICES = [
   "why":[
     ("Treated by an endodontist","Not a general dentist working it out, a specialist who does root canals every day and takes the difficult ones others refer out."),
     ("The tooth is saved","Where possible we keep your natural tooth, which is always better than removing and replacing it."),
-    ("Priced up front, EMI available","You see the full cost before we begin, and 0% EMI covers the treatment and the crown."),
+    ("Priced up front, EMI available","You see the full cost before we begin, and no-cost EMI covers the treatment and the crown."),
     ("Fast relief","In pain now? Message us on WhatsApp, many emergencies are seen and settled the same day."),
   ],
   "specialist":{
-    "img":"/assets/img/doctors/dr-nikil.jpg","alt":"Dr. Nikhilkumar Gudla, Microscopic Endodontist at Roots Dental Care",
-    "eyebrow":"Your specialist","name":"Dr. Nikhilkumar Gudla","role":"Microscopic Endodontist",
-    "bio":"Fellowship-trained in microscopic endodontics and certified by RCS Edinburgh. He is the person you want when a root canal is difficult, a canal is hard to find, or a previous treatment has failed, the cases that decide whether a tooth is saved or lost.",
+    "img":"/assets/img/doctors/dr-nikil.jpg","alt":"Dr. Nikhilkumar Gudla, Microscopic Root Canal Specialist at Roots Dental Care",
+    "eyebrow":"Your specialist","name":"Dr. Nikhilkumar Gudla","role":"Microscopic Root Canal Specialist",
+    "bio":"Fellowship in advanced microscopic endodontics and various courses, certified by RCS Edinburgh. He is the specialist you want when a root canal is difficult, a canal is hard to find, or a previous treatment has failed, the cases that decide whether a tooth is saved or lost.",
     "cta":"Book with Dr. Nikhil"},
   "faq_head":"Root canals in Surat, answered",
   "faqs":[
     ("Is a root canal painful?","Not the way people fear. The pain patients associate with root canals is usually the infection beforehand. Under proper anaesthesia and a microscope, the treatment itself is comfortable, most say it felt like a routine filling, and the relief is immediate."),
     ("How many sittings does it take?","Many root canals are completed in a single sitting. More complex or badly infected teeth may need two. We will tell you which after the X-ray."),
-    ("How much does a root canal cost in Surat?","It depends on the tooth and whether a crown is needed, and we share the full cost before starting, with no hidden charges. 0% EMI is available, and your consultation and X-ray are free this month."),
+    ("How much does a root canal cost in Surat?","It depends on the tooth and whether a crown is needed, and we share the full cost before starting, with no hidden charges. no-cost EMI is available, and your consultation and X-ray are free this month."),
     ("Should I just get the tooth pulled instead?","Saving your natural tooth is almost always better. An extraction leaves a gap that then needs an implant or bridge, usually more time and more cost than saving the tooth now."),
     ("Do I really need a crown afterwards?","For back teeth, in most cases yes. A root-canal-treated tooth becomes brittle; a crown protects it from cracking so it lasts for years."),
     ("My old root canal still hurts, can it be fixed?","Often, yes. A failed root canal can usually be re-treated under the microscope and saved, rather than removed."),
@@ -496,12 +496,12 @@ SERVICES = [
 {
   "slug":"dental-implants","short":"implant","treatment":"Dental implant / missing tooth",
   "title":"Dental Implants in Althan, Surat | Roots Dental Care",
-  "meta":"Dental implants in Althan, Surat by an implantologist with 5000+ implants placed. Single tooth to full-mouth fixed teeth, bone grafting in-house, 0% EMI. Free consultation and digital X-ray. Book appointment.",
-  "og":"Dental implants in Althan, Surat, single tooth to full-mouth fixed teeth, 5000+ placed, 0% EMI.",
+  "meta":"Dental implants in Althan, Surat by an implantologist with 5000+ implants placed. Single tooth to full-mouth fixed teeth, bone grafting in-house, no-cost EMI. Free consultation and digital X-ray. Book appointment.",
+  "og":"Dental implants in Althan, Surat, single tooth to full-mouth fixed teeth, 5000+ placed, no-cost EMI.",
   "h1_main":"Dental Implants in","h1_accent":"Althan, Surat",
-  "hero_sub":"Replace missing teeth for good, single tooth to full-mouth fixed teeth, with 5,000+ implants placed and 0% EMI.",
+  "hero_sub":"Replace missing teeth for good, single tooth to full-mouth fixed teeth, with 5,000+ implants placed and no-cost EMI.",
   "eyebrow":"Implantology",
-  "stats":[("5000+","Implants placed"),("Full-mouth","fixed-teeth options"),("In-house","bone grafting"),("0%","EMI available")],
+  "stats":[("5000+","Implants placed"),("Full-mouth","fixed-teeth options"),("In-house","bone grafting"),("No-cost","EMI available")],
   "incl_head":"From a single gap to a full set of fixed teeth",
   "incl_intro":"Implants that look, feel and bite like your own, placed by a specialist and planned on 3D imaging.",
   "included":[
@@ -509,7 +509,7 @@ SERVICES = [
     ("Full-mouth fixed teeth","A full arch of fixed teeth on as few as four implants (All-on-4 / All-on-6), for those tired of loose, removable dentures."),
     ("Bone grafting & sinus lift in-house","Not enough bone? We rebuild it here, so ‘you are not a candidate’ rarely turns out to be true."),
     ("Guided, precise placement","Planned on 3D scans and placed accurately, which is what makes an implant last."),
-    ("Priced up front, 0% EMI","The full cost before we start, and EMI that makes even full-mouth work manageable."),
+    ("Priced up front, no-cost EMI","The full cost before we start, and EMI that makes even full-mouth work manageable."),
   ],
   "why_head":"Why patients choose Roots for implants",
   "why_intro":"Complex cases and severe bone loss are routine here, not a first attempt.",
@@ -526,7 +526,7 @@ SERVICES = [
     "cta":"Book with Dr. Dhawal"},
   "faq_head":"Dental implants in Surat, answered",
   "faqs":[
-    ("How much does a dental implant cost in Surat?","It depends on how many teeth, the implant system and whether bone grafting is needed. We give you the full plan and cost before starting, with no hidden charges, and 0% EMI to spread it. The consultation and X-ray are free this month."),
+    ("How much does a dental implant cost in Surat?","It depends on how many teeth, the implant system and whether bone grafting is needed. We give you the full plan and cost before starting, with no hidden charges, and no-cost EMI to spread it. The consultation and X-ray are free this month."),
     ("Does getting an implant hurt?","Placing an implant is usually more comfortable than an extraction. It is done under local anaesthesia, and most patients are back to normal the next day with simple aftercare."),
     ("How long does the whole process take?","The implant is placed in a single appointment, then integrates with the bone over a few weeks to a few months before the final tooth goes on. Some cases allow immediate fixed teeth, we will tell you at the consultation."),
     ("I've been told I don't have enough bone. Can I still get implants?","Very often, yes. We do bone grafting and sinus lifts in-house to rebuild the site, so patients turned away elsewhere can usually still be treated."),
@@ -545,7 +545,7 @@ SERVICES = [
   "h1_main":"Smile Design in","h1_accent":"Althan, Surat",
   "hero_sub":"Veneers, whitening and digital smile design, see your new smile on screen before we touch a single tooth.",
   "eyebrow":"Cosmetic dentistry",
-  "stats":[("Digital","smile preview"),("Natural","colour-matched"),("0%","EMI available"),("1700+","Smiles cared for")],
+  "stats":[("Digital","smile preview"),("Natural","colour-matched"),("No-cost","EMI available"),("2000+","Smiles cared for")],
   "incl_head":"A smile designed around your face, not a template",
   "incl_intro":"Planned digitally so you see the result first, then created with veneers, whitening and fine cosmetic work.",
   "included":[
@@ -560,7 +560,7 @@ SERVICES = [
     ("You see it before you commit","The digital preview means no surprises, you sign off on the smile before we start."),
     ("Natural, not obvious","Shape and shade matched to your face and your existing teeth, so the result reads as real."),
     ("Specialist clinic behind it","If a tooth needs a root canal or an implant first, the specialists are already here, the cosmetics sit on a healthy foundation."),
-    ("Priced up front, EMI available","You get the full plan and cost before starting, with 0% EMI to spread a full makeover."),
+    ("Priced up front, EMI available","You get the full plan and cost before starting, with no-cost EMI to spread a full makeover."),
   ],
   "specialist":{
     "img":"/assets/img/clinic-1.jpg","alt":"Smile design and cosmetic dentistry at Roots Dental Care, Althan, Surat",
@@ -570,7 +570,7 @@ SERVICES = [
     "cta":"Book a smile consult"},
   "faq_head":"Smile design in Surat, answered",
   "faqs":[
-    ("How much do veneers and teeth whitening cost in Surat?","It depends on how many teeth and the type of veneer or whitening. You will get the full plan and cost before starting, with 0% EMI available, and the consultation is free this month."),
+    ("How much do veneers and teeth whitening cost in Surat?","It depends on how many teeth and the type of veneer or whitening. You will get the full plan and cost before starting, with no-cost EMI available, and the consultation is free this month."),
     ("Will veneers look natural?","That is the whole point of designing digitally. We match shape and shade to your face and existing teeth, and you approve the preview first, the aim is natural, not obvious."),
     ("Do veneers ruin the teeth underneath?","Modern veneers are conservative and remove very little tooth structure, some need almost none. We only prepare what is necessary, and always explain exactly what is involved."),
     ("How long does a smile makeover take?","Whitening can be done in a single session. Veneers typically take two to three visits over a couple of weeks. A full makeover is planned so you know the timeline up front."),

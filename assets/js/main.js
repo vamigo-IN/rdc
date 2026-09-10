@@ -35,7 +35,7 @@
     //    (see APPSCRIPT-SETUP.md), Deploy -> New deployment -> Web app,
     //    "Execute as: Me", "Who has access: Anyone", then copy the /exec URL.
     // 2) Paste that URL below. Leave blank to skip sheet logging.
-    appsScriptUrl: ""
+    appsScriptUrl: "https://script.google.com/macros/s/AKfycbxmyth4RrdD-DcZRnOx-w63yb2wdxPeb1ZbgYUHUXvjY-OuCwWWaajg4tLu0ZgBKIlL/exec"
   };
 
   // Save a lead as a row in the Google Sheet via Apps Script.

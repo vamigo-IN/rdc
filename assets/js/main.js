@@ -93,6 +93,9 @@
 
   // Fire analytics events if GA4 / Meta Pixel are present (added later).
   function track(name) {
+    // Push to dataLayer so Google Tag Manager can fire GA4 / Google Ads
+    // conversion tags on these events (e.g. trigger = Custom Event "lead_submit").
+    try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: name }); } catch (e) {}
     try { if (window.gtag) window.gtag("event", name); } catch (e) {}
     try { if (window.fbq) window.fbq("trackCustom", name); } catch (e) {}
     // Count a Google Ads conversion for real lead actions.

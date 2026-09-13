@@ -1,73 +1,116 @@
-# Save every booking to a Google Sheet (Apps Script)
+# Lead capture — saves to Google Sheet AND emails you (Apps Script)
 
-Every form submission on the site (hero form, inline form, popup) is sent to
-your Google Sheet as a row, with the treatment, phone, which page it came from,
-and which form. It still opens WhatsApp and (if set) emails a copy — the sheet
-is an extra, permanent record.
+Every booking on the site is sent to your Apps Script, which does BOTH:
+1. appends a row to your Google Sheet, and
+2. emails the lead to you.
 
-## One-time setup (about 3 minutes)
+One endpoint, both outcomes — no SMTP, no Web3Forms needed.
 
-1. Create a Google Sheet (or open the one you want to use).
-2. In the Sheet: **Extensions → Apps Script**. Delete anything there and paste
-   the code below. Save.
-3. **Deploy → New deployment → gear icon → Web app.**
-   - **Description:** Roots leads
-   - **Execute as:** Me
-   - **Who has access:** Anyone
-   - Click **Deploy**, authorise when asked, and **copy the Web app URL**
-     (it ends in `/exec`).
-4. Open `assets/js/main.js`, find the `CONFIG` block near the top, and paste the
-   URL into `appsScriptUrl`:
+---
 
-   ```js
-   appsScriptUrl: "https://script.google.com/macros/s/AKfyc.../exec"
-   ```
+## IMPORTANT: why you saw no leads
 
-5. Deploy the site. Submit a test booking — a new row should appear in the sheet
-   within a second or two.
+Apps Script runs the **deployed** version, not the code you see in the editor,
+and it only accepts anonymous POSTs from the website when access is **"Anyone."**
+99% of "no leads" cases are one of these:
 
-> Whenever you change the Apps Script code later, you must **Deploy → Manage
-> deployments → edit → New version** (or the old code keeps running). Pasting the
-> URL once is enough; the URL stays the same across new versions.
+- The Web-app deployment access is **"Only myself"** (must be **Anyone**).
+- The code was edited but **not re-deployed as a new version**.
+- The site was never deployed with the `/exec` URL in place.
 
-## The Apps Script code
+The steps below fix all three, and there's a one-click test at the end.
+
+---
+
+## 1) Paste this code
+
+In your Sheet → **Extensions → Apps Script** → delete everything → paste:
 
 ```javascript
+// === Roots Dental Care — lead capture: Sheet + Email ===
+var TO_EMAIL = "aditya@growven.ai";   // <-- WHERE LEAD EMAILS GO. Change to the
+                                       //     clinic inbox. Comma-separate for many:
+                                       //     "clinic@x.com, aditya@growven.ai"
+
 function doPost(e) {
   try {
+    var d = JSON.parse(e.postData.contents);
+
+    // 1) Save to the Sheet
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName('Leads') || ss.insertSheet('Leads');
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow(['Timestamp', 'Name', 'Phone', 'Treatment',
-                       'Preferred time', 'Form', 'Page', 'URL']);
+      sheet.appendRow(['Timestamp','Name','Phone','Treatment',
+                       'Preferred time','Form','Page','URL']);
     }
-    var d = JSON.parse(e.postData.contents);
-    sheet.appendRow([
-      new Date(),
-      d.name || '',
-      d.phone || '',
-      d.treatment || '',
-      d.time || '',
-      d.source || '',
-      d.page || '',
-      d.url || ''
-    ]);
-    return ContentService
-      .createTextOutput(JSON.stringify({ ok: true }))
-      .setMimeType(ContentService.MimeType.JSON);
+    sheet.appendRow([new Date(), d.name||'', d.phone||'', d.treatment||'',
+                     d.time||'', d.source||'', d.page||'', d.url||'']);
+
+    // 2) Email you
+    if (TO_EMAIL) {
+      var subject = 'New booking: ' + (d.name||'Website lead') +
+                    (d.treatment ? ' — ' + d.treatment : '');
+      var body =
+        'New enquiry from the website:\n\n' +
+        'Name: '            + (d.name||'')      + '\n' +
+        'Phone / WhatsApp: '+ (d.phone||'')     + '\n' +
+        'Treatment: '       + (d.treatment||'') + '\n' +
+        'Preferred time: '  + (d.time||'')      + '\n' +
+        'Form: '            + (d.source||'')    + '\n' +
+        'Page: '            + (d.page||'')      + '\n' +
+        'URL: '             + (d.url||'')        + '\n\n' +
+        'Call or WhatsApp them now while they are warm.';
+      MailApp.sendEmail(TO_EMAIL, subject, body);
+    }
+
+    return ContentService.createTextOutput(JSON.stringify({ok:true}))
+                         .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ ok: false, error: String(err) }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(JSON.stringify({ok:false, error:String(err)}))
+                         .setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+// Open the /exec URL in a browser to check the deployment is live + public.
+function doGet(e) {
+  return ContentService.createTextOutput('Roots lead endpoint is live')
+                       .setMimeType(ContentService.MimeType.TEXT);
 }
 ```
 
+Set `TO_EMAIL` at the top. **Save** (disk icon).
+
+## 2) Deploy correctly (this is the step people get wrong)
+
+- If you have NO deployment yet: **Deploy → New deployment → gear → Web app.**
+- If you already deployed once: **Deploy → Manage deployments → pencil (Edit)
+  the existing one** — do NOT create a brand-new one, or the URL changes and the
+  site would need updating.
+
+In the dialog set:
+- **Execute as:** Me
+- **Who has access:** **Anyone**   ← must be this, not "Only myself"
+- **Version:** **New version**      ← every code change needs a new version
+- **Deploy** → **Authorize access** → allow Sheets + Send email.
+
+Copy the **Web app URL** (ends in `/exec`). It should match the one already in the
+site (`assets/js/main.js` → `appsScriptUrl`). If it's different, send it to me.
+
+## 3) Test in 30 seconds
+
+- **Open the `/exec` URL in a browser.** You should see: **"Roots lead endpoint is live"**.
+  - If you instead see a Google sign-in / "you need permission" page → access is
+    still "Only myself". Redeploy with **Anyone**.
+  - If you see a 404 → the deployment doesn't exist; deploy it.
+- Then submit a real test on the live site. Within ~2 seconds: a new **row** in the
+  Sheet **and** an **email** to `TO_EMAIL`.
+- Still nothing? Open the site, press **F12 → Console**, submit again, and look for
+  `[RDC] sending lead to Google Sheet…`. If that line appears, the site is sending
+  and the problem is on the Apps Script side (re-check access + new version).
+
 ## Notes
-- The site posts with `Content-Type: text/plain` and `mode: no-cors`. This is the
-  reliable way for a static site to write to Apps Script without CORS errors. The
-  browser can't read the response, but the row is still written — that's expected.
-- Columns saved: **Timestamp, Name, Phone, Treatment, Preferred time, Form
-  (Hero/Inline/Popup), Page, URL.** The Form and Page columns tell you which
-  landing page and which form converted — useful for judging your Google Ads.
-- Leave `appsScriptUrl` blank to turn sheet logging off; nothing breaks.
+- Consumer Gmail sends up to ~100 emails/day via MailApp; Google Workspace ~1500.
+  Plenty for a clinic.
+- The site posts with `text/plain` + `no-cors` (required for a static site to reach
+  Apps Script without CORS errors). The browser can't read the reply, but the row is
+  written and the email sent — that's expected.

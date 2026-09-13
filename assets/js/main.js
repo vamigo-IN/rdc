@@ -45,6 +45,7 @@
   // stuck network never traps the visitor.
   function sendToSheet(data) {
     if (!CONFIG.appsScriptUrl) return Promise.resolve(); // logging off until URL set
+    try { console.info("[RDC] sending lead to Google Sheet…", data.source); } catch (e) {}
     var req = fetch(CONFIG.appsScriptUrl, {
       method: "POST",
       mode: "no-cors",

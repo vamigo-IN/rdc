@@ -33,13 +33,19 @@ DirectoryIndex index.html
   ExpiresByType image/jpeg "access plus 1 year"
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType image/x-icon "access plus 1 year"
-  ExpiresByType text/html "access plus 1 hour"
+  # HTML must always revalidate so new deploys show immediately.
+  ExpiresByType text/html "access plus 0 seconds"
 </IfModule>
 
-# --- Security headers ---
+# --- Security headers + cache control ---
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  # Never cache HTML — always fetch the latest page. CSS/JS are safe to cache long
+  # because their URLs carry a ?v= build stamp that changes every deploy.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </FilesMatch>
 </IfModule>

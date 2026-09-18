@@ -465,3 +465,69 @@ body.sheet-lock{overflow:hidden;}
   .nav-dd-t::after{display:none;}
   .nav-dd::before{display:none;}
 }
+
+/* ===== action-list additions: pricing, rating, reviews, ribbon, mobile bar ===== */
+/* WhatsApp button (hero) */
+.btn-wapp{background:linear-gradient(135deg,#2CB56B,#128C7E); color:#fff; box-shadow:0 6px 18px rgba(18,140,126,.28);}
+.btn-wapp:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(18,140,126,.4);}
+/* Google rating strip under hero buttons */
+.rating-line{margin-top:16px; font-size:.86rem; color:#EAF3F2;}
+.rating-line .stars{color:var(--gold); letter-spacing:1px;}
+.rating-line b{color:#fff;}
+/* Pricing box */
+.price-band{background:var(--paper); border-bottom:1px solid var(--line);}
+.price-card{display:grid; grid-template-columns:1.5fr .9fr; gap:30px; align-items:center; background:var(--white); border:1px solid var(--line); border-top:3px solid var(--gold); border-radius:16px; padding:26px 28px; box-shadow:var(--glass-shadow);}
+.price-main{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin:8px 0 12px;}
+.price-from{font-family:var(--head); font-weight:800; font-size:2.1rem; color:var(--heading); letter-spacing:-.02em; line-height:1;}
+.price-emi{font-family:var(--head); font-weight:600; font-size:1rem; color:var(--gold-deep);}
+.price-copy{color:var(--ink); line-height:1.6; font-size:.96rem;}
+.price-note{margin-top:8px; font-family:var(--mono); font-size:.78rem; color:var(--muted);}
+.price-actions{display:flex; flex-direction:column; gap:12px;}
+.price-actions .btn{width:100%;}
+@media(max-width:820px){ .price-card{grid-template-columns:1fr; gap:20px;} }
+/* Offer ribbon (repeat mid-page) */
+.offer-ribbon{background:linear-gradient(135deg,#FBF4E4,#F3E7C9); border-top:1px solid #EbD9AE; border-bottom:1px solid #EbD9AE;}
+.offer-ribbon-in{display:flex; align-items:center; justify-content:center; gap:22px; flex-wrap:wrap; padding:16px 0;}
+.offer-ribbon-in span{font-family:var(--head); font-weight:600; color:var(--gold-deep); display:inline-flex; align-items:center; gap:9px;}
+.offer-ribbon-in .dotpulse{width:8px; height:8px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 0 rgba(201,169,110,.6); animation:pulse 2s infinite;}
+/* Reviews band reuses .rev-grid/.rev */
+.reviews-band{background:var(--white);}
+/* Implants: options + comparison */
+.opt-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+.opt{position:relative; background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:14px; padding:24px; box-shadow:var(--glass-shadow);}
+.opt-featured{border-color:var(--gold); border-top:3px solid var(--gold);}
+.opt-tag{position:absolute; top:-11px; right:16px; background:var(--gold); color:#3a2d10; font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; padding:4px 10px; border-radius:6px;}
+.opt-price{font-family:var(--head); font-weight:800; font-size:1.5rem; color:var(--heading); margin:8px 0 10px;}
+.opt-price span{display:block; font-family:var(--mono); font-size:.72rem; font-weight:500; color:var(--muted); letter-spacing:.04em;}
+.opt p{color:var(--muted); font-size:.92rem;}
+.compare{margin-top:34px;}
+.compare h3{margin-bottom:14px;}
+.ctable-wrap{overflow-x:auto;}
+.ctable{width:100%; border-collapse:collapse; min-width:520px; background:var(--white); border:1px solid var(--line); border-radius:12px; overflow:hidden;}
+.ctable th,.ctable td{padding:12px 14px; text-align:left; font-size:.92rem; border-bottom:1px solid var(--line);}
+.ctable thead th{background:var(--teal-tint); color:var(--heading); font-family:var(--head);}
+.ctable td:first-child{color:var(--ink); font-weight:500;}
+.ctable td.yes{color:var(--teal); font-weight:700;}
+@media(max-width:560px){ .opt-grid{grid-template-columns:1fr;} }
+/* Root-canal relief bar */
+.relief-bar{background:linear-gradient(135deg,#0B3B40,#006D75); color:#EAF6F5; font-size:.9rem;}
+.relief-in{display:flex; gap:14px; align-items:center; justify-content:center; flex-wrap:wrap; padding:9px 0; text-align:center;}
+.relief-in a{color:var(--gold); font-weight:700; white-space:nowrap;}
+/* Sticky mobile Call + WhatsApp bar */
+.mobilebar{display:none;}
+.mb-btn{flex:1; text-align:center; padding:15px 8px; font-family:var(--head); font-weight:700; font-size:.98rem; color:#fff;}
+.mb-call{background:linear-gradient(135deg,#008C95,#006D75);}
+.mb-wa{background:linear-gradient(135deg,#2CB56B,#128C7E);}
+@media(max-width:640px){
+  .mobilebar{display:flex; position:fixed; left:0; right:0; bottom:0; z-index:80; box-shadow:0 -4px 18px rgba(11,59,64,.18);}
+  .side-actions{display:none;}          /* replaced by the bottom bar on phones */
+  body{padding-bottom:56px;}            /* room so the bar never covers content */
+}
+/* Homepage "treatments from" price strip */
+.price-strip{background:var(--white); border-bottom:1px solid var(--line);}
+.price-strip-in{display:flex; align-items:center; gap:10px 14px; flex-wrap:wrap; padding:14px 0;}
+.price-strip .ps-label{font-family:var(--mono); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);}
+.price-strip a{font-family:var(--head); font-weight:600; font-size:.88rem; color:var(--heading); border:1px solid var(--line); border-radius:999px; padding:6px 14px; transition:border-color .15s ease, color .15s ease;}
+.price-strip a:hover{border-color:var(--teal); color:var(--teal);}
+.price-strip .ps-emi{margin-left:auto; color:var(--gold-deep); font-weight:600; font-size:.84rem;}
+@media(max-width:760px){ .price-strip-in{flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;} .price-strip a{white-space:nowrap;} .price-strip .ps-emi{margin-left:12px; white-space:nowrap;} }

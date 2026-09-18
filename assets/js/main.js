@@ -220,10 +220,13 @@
   }
 
   function buildWhatsappLinks() {
-    // Point every "Book on WhatsApp" link (without a form) straight to chat.
-    var base = "https://wa.me/" + CONFIG.whatsappNumber +
-      "?text=" + encodeURIComponent("Hi Roots Dental Care, I'd like to book a visit.");
-    document.querySelectorAll("a[data-wa]").forEach(function (a) { a.setAttribute("href", base); });
+    // Point every WhatsApp link straight to chat. If the link has a data-wa-msg,
+    // use that treatment-specific message; otherwise a generic booking message.
+    var generic = "Hi Roots Dental Care, I'd like to book a visit.";
+    document.querySelectorAll("a[data-wa]").forEach(function (a) {
+      var msg = a.getAttribute("data-wa-msg") || generic;
+      a.setAttribute("href", "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(msg));
+    });
   }
 
   // Booking bottom sheet: opens ONLY on a [data-open-book] ("Book appointment") click.

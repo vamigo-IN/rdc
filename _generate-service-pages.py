@@ -84,8 +84,9 @@ def hero(d):
       <p class="hero-sub">{d["hero_sub"]}</p>
       <div class="hero-cta">
         <a href="tel:{PHONE_TEL}" class="btn btn-glass">Call {PHONE_DISPLAY}</a>
-        <a href="#book-inline" class="btn btn-red" data-open-book>Book appointment</a>
+        <a class="btn btn-wapp" data-wa data-wa-msg="{esc(d["wa_msg"])}" href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
       </div>
+      <div class="rating-line"><span class="stars">★★★★★</span> <b>4.9</b> on Google · rated by 200+ patients in Surat</div>
     </div>
     <div class="hero-form" id="book-hero">
       <span class="badge-offer"><span class="dotpulse"></span>Free consultation this month</span>
@@ -106,6 +107,78 @@ def hero(d):
     </div>
   </div>
 </section>'''
+
+def pricing_box(d):
+    return f'''<section class="block price-band">
+  <div class="wrap">
+    <div class="price-card reveal">
+      <div class="price-info">
+        <span class="eyebrow">Transparent pricing</span>
+        <div class="price-main"><span class="price-from">{esc(d["price_from"])}</span><span class="price-emi">{esc(d["emi"])}</span></div>
+        <p class="price-copy">{esc(d["price_copy"])}</p>
+        <p class="price-note">Final cost is confirmed after your free consultation. No hidden charges.</p>
+      </div>
+      <div class="price-actions">
+        <a href="#book-inline" class="btn btn-red" data-open-book>Book free consultation</a>
+        <a class="btn btn-ghost" data-wa data-wa-msg="{esc(d["wa_msg"])}" href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>'''
+
+def offer_ribbon():
+    return '''<section class="offer-ribbon reveal"><div class="wrap offer-ribbon-in">
+    <span><span class="dotpulse"></span>Free consultation and digital X-ray this month. Only a few slots left.</span>
+    <a href="#book-inline" class="btn btn-red" data-open-book>Claim your slot</a>
+  </div></section>'''
+
+def reviews_row(d):
+    cards = "".join(
+        f'<div class="rev"><div class="stars" aria-label="5 out of 5">★★★★★</div><p>{esc(q)}</p>'
+        f'<div class="who"><b>{esc(who)}</b> · {esc(area)}</div></div>'
+        for q, who, area in d["reviews"])
+    return f'''<section class="block reviews-band">
+  <div class="wrap">
+    <div class="sec-top sec-top-center reveal">
+      <div><span class="eyebrow">Patient stories</span><h2>{esc(d["reviews_head"])}</h2></div>
+      <p>Real experiences from patients in and around Surat.</p>
+    </div>
+    <div class="rev-grid reveal">{cards}</div>
+  </div>
+</section>'''
+
+def implants_extra():
+    return '''<section class="block">
+  <div class="wrap">
+    <div class="sec-top reveal"><div><span class="eyebrow">Your options</span><h2>Two implant options, priced up front</h2></div><p>Both placed by the same implantologist. Pick what fits your budget.</p></div>
+    <div class="opt-grid reveal">
+      <div class="opt"><h3>Standard implant</h3><div class="opt-price">From ₹22,000 <span>per tooth</span></div><p>A quality implant system, right for most single missing teeth. Or about ₹1,999/mo on No-Cost EMI.</p></div>
+      <div class="opt opt-featured"><span class="opt-tag">Premium</span><h3>Premium branded implant</h3><div class="opt-price">From ₹30,000 <span>per tooth</span></div><p>Top global brands with the longest track record and warranty. EMI available.</p></div>
+    </div>
+    <div class="compare reveal">
+      <h3>Implant vs bridge vs denture</h3>
+      <div class="ctable-wrap"><table class="ctable">
+        <thead><tr><th>&nbsp;</th><th>Implant</th><th>Bridge</th><th>Denture</th></tr></thead>
+        <tbody>
+        <tr><td>Replaces the tooth root</td><td class="yes">Yes</td><td>No</td><td>No</td></tr>
+        <tr><td>Leaves neighbouring teeth untouched</td><td class="yes">Yes</td><td>No, they're ground down</td><td class="yes">Yes</td></tr>
+        <tr><td>Stays fixed, never removed</td><td class="yes">Yes</td><td class="yes">Yes</td><td>No</td></tr>
+        <tr><td>Typical lifespan</td><td class="yes">Decades</td><td>5 to 10 years</td><td>A few years</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>'''
+
+RELIEF_BAR = f'''<div class="relief-bar"><div class="wrap relief-in">
+  <span>In pain right now? We keep same-day slots.</span>
+  <a data-wa data-wa-msg="Hi Roots Dental Care, I have tooth pain and need a same-day root canal slot." href="#" target="_blank" rel="noopener">Message us on WhatsApp &rarr;</a>
+</div></div>'''
+
+MOBILE_BAR = f'''<div class="mobilebar" aria-label="Quick contact">
+  <a href="tel:{PHONE_TEL}" class="mb-btn mb-call">Call now</a>
+  <a class="mb-btn mb-wa" data-wa href="#" target="_blank" rel="noopener">WhatsApp</a>
+</div>'''
 
 def statsband(d):
     cells = "".join(f'<div class="stat"><b>{b}</b><span>{s}</span></div>' for b, s in d["stats"])
@@ -405,19 +478,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->'''
 
 def page(d):
-    return "\n".join([
-        head(d), header(), hero(d), statsband(d), included(d), why(d),
-        specialist(d), crosslinks(d["slug"]), faqsection(d), location(),
-        bookinline(d), footer(), FAB_SHEET, sheet(d),
-        '<script src="/assets/js/main.js" defer></script>',
-        "</body>\n</html>",
-    ])
+    parts = [head(d)]
+    if d["slug"] == "root-canal":
+        parts.append(RELIEF_BAR)
+    parts += [header(), hero(d), pricing_box(d), statsband(d), included(d), why(d)]
+    if d["slug"] == "dental-implants":
+        parts.append(implants_extra())
+    parts += [specialist(d), offer_ribbon(), reviews_row(d), crosslinks(d["slug"]),
+              faqsection(d), location(), bookinline(d), footer(),
+              FAB_SHEET, MOBILE_BAR, sheet(d),
+              '<script src="/assets/js/main.js" defer></script>',
+              "</body>\n</html>"]
+    return "\n".join(parts)
 
 # --- per-service content ---------------------------------------------------
 
 SERVICES = [
 {
   "slug":"general-dentistry","short":"check-up","treatment":"Check-up & cleaning",
+  "wa_msg":"Hi Roots Dental Care, I want details about a check-up and pricing.",
+  "price_from":"Free check-up","emi":"Cleaning from ₹499",
+  "price_copy":"Free check-up this month. Cleaning and polishing ₹499. Tooth-coloured filling from ₹999. Tooth extraction from ₹800. Same day, single visit for most cases.",
+  "reviews_head":"What patients say about routine care",
+  "reviews":[("Went in for a cleaning and a nervous first visit. Quick, gentle, and they showed me the cost before starting.","Priya M.","Vesu"),("Honest advice. They told me a filling could wait rather than pushing treatment.","Rahul P.","Adajan")],
   "title":"General Dentistry in Althan, Surat | Roots Dental Care",
   "meta":"Gentle general dentistry in Althan, Surat, check-ups, scaling and polishing, tooth-coloured fillings and sensitivity care, most in a single visit. Free consultation and digital X-ray this month. Book appointment.",
   "og":"Check-ups, cleaning, fillings and sensitivity care, done gently and priced up front, in Althan, Surat.",
@@ -449,7 +532,7 @@ SERVICES = [
     "cta":"Book a check-up"},
   "faq_head":"General dentistry in Surat, answered",
   "faqs":[
-    ("How much does a dental check-up and cleaning cost in Surat?","We keep routine care affordable and tell you the full cost before we start. Your first consultation and digital X-ray are free this month, so you get a clear opinion at no risk."),
+    ("How much does a dental check-up and cleaning cost in Surat?","Your check-up is free this month. Cleaning and polishing is ₹499, tooth-coloured fillings from ₹999 and extractions from ₹800. We confirm the exact cost before we start, with no hidden charges."),
     ("Does scaling loosen or damage teeth?","No. This is one of the most common myths. Scaling removes hardened tartar that irritates the gums; it does not harm enamel. Teeth can feel slightly different afterwards simply because the buildup wedged between them is gone."),
     ("Do fillings hurt?","For most small cavities, no. We use digital imaging to be precise and gentle, and numb the area properly when needed. Most fillings are done comfortably in a single visit."),
     ("How often should I visit the dentist?","For most people, once every six months for a check-up and cleaning. If you are prone to cavities or gum problems, we may suggest coming a little more often."),
@@ -462,6 +545,11 @@ SERVICES = [
 },
 {
   "slug":"root-canal","short":"root canal","treatment":"Root canal",
+  "wa_msg":"Hi Roots Dental Care, I have tooth pain and want root canal details and pricing.",
+  "price_from":"From ₹5,999","emi":"Crown from ₹4,999 · No-Cost EMI",
+  "price_copy":"Painless microscopic root canal from ₹5,999. Protective crown from ₹4,999. No-Cost EMI available. In pain now? Message us on WhatsApp for a same-day slot.",
+  "reviews_head":"What root canal patients say",
+  "reviews":[("I put off my root canal for a year out of fear. It was painless and done in one sitting.","Sneha K.","Piplod"),("My old root canal had failed. They re-treated it under a microscope and saved the tooth.","Imran S.","Althan")],
   "title":"Painless Root Canal in Althan, Surat | Roots Dental Care",
   "meta":"Microscope-guided root canal treatment in Althan, Surat, often in a single sitting and far more comfortable than its reputation. Save your natural tooth. Free consultation and digital X-ray. Book appointment.",
   "og":"Microscope-guided root canal in Althan, Surat, often a single sitting, and far gentler than its reputation.",
@@ -495,7 +583,7 @@ SERVICES = [
   "faqs":[
     ("Is a root canal painful?","Not the way people fear. The pain patients associate with root canals is usually the infection beforehand. Under proper anaesthesia and a microscope, the treatment itself is comfortable, most say it felt like a routine filling, and the relief is immediate."),
     ("How many sittings does it take?","Many root canals are completed in a single sitting. More complex or badly infected teeth may need two. We will tell you which after the X-ray."),
-    ("How much does a root canal cost in Surat?","It depends on the tooth and whether a crown is needed, and we share the full cost before starting, with no hidden charges. no-cost EMI is available, and your consultation and X-ray are free this month."),
+    ("How much does a root canal cost in Surat?","A painless microscopic root canal starts from ₹5,999, and a protective crown from ₹4,999. We confirm the exact cost after the X-ray, with no hidden charges, and No-Cost EMI is available. Your consultation is free this month."),
     ("Should I just get the tooth pulled instead?","Saving your natural tooth is almost always better. An extraction leaves a gap that then needs an implant or bridge, usually more time and more cost than saving the tooth now."),
     ("Do I really need a crown afterwards?","For back teeth, in most cases yes. A root-canal-treated tooth becomes brittle; a crown protects it from cracking so it lasts for years."),
     ("My old root canal still hurts, can it be fixed?","Often, yes. A failed root canal can usually be re-treated under the microscope and saved, rather than removed."),
@@ -506,6 +594,11 @@ SERVICES = [
 },
 {
   "slug":"dental-implants","short":"implant","treatment":"Dental implant / missing tooth",
+  "wa_msg":"Hi Roots Dental Care, I want details about dental implants and pricing.",
+  "price_from":"From ₹22,000","emi":"≈ ₹1,999/mo · No-Cost EMI",
+  "price_copy":"Single dental implant from ₹22,000 per tooth. Premium branded implants from ₹30,000. Or from about ₹1,999 per month on No-Cost EMI. Free consultation and digital X-ray this month.",
+  "reviews_head":"What implant patients say",
+  "reviews":[("Two implants on No-Cost EMI. Everything was explained, nothing pushed, and the clinic is spotless.","Rahul P.","Adajan"),("I was told elsewhere I didn't have enough bone. They grafted and placed my implants here.","Mahesh D.","Vesu")],
   "title":"Dental Implants in Althan, Surat | Roots Dental Care",
   "meta":"Dental implants in Althan, Surat by an implantologist with 5000+ implants placed. Single tooth to full-mouth fixed teeth, bone grafting in-house, no-cost EMI. Free consultation and digital X-ray. Book appointment.",
   "og":"Dental implants in Althan, Surat, single tooth to full-mouth fixed teeth, 5000+ placed, no-cost EMI.",
@@ -537,7 +630,7 @@ SERVICES = [
     "cta":"Book with Dr. Dhawal"},
   "faq_head":"Dental implants in Surat, answered",
   "faqs":[
-    ("How much does a dental implant cost in Surat?","It depends on how many teeth, the implant system and whether bone grafting is needed. We give you the full plan and cost before starting, with no hidden charges, and no-cost EMI to spread it. The consultation and X-ray are free this month."),
+    ("How much does a dental implant cost in Surat?","Most single implants are between ₹22,000 and ₹30,000 depending on the system and whether bone grafting is needed, or from about ₹1,999 a month on No-Cost EMI. We share the full plan and cost before we begin. The consultation and X-ray are free this month."),
     ("Does getting an implant hurt?","Placing an implant is usually more comfortable than an extraction. It is done under local anaesthesia, and most patients are back to normal the next day with simple aftercare."),
     ("How long does the whole process take?","The implant is placed in a single appointment, then integrates with the bone over a few weeks to a few months before the final tooth goes on. Some cases allow immediate fixed teeth, we will tell you at the consultation."),
     ("I've been told I don't have enough bone. Can I still get implants?","Very often, yes. We do bone grafting and sinus lifts in-house to rebuild the site, so patients turned away elsewhere can usually still be treated."),
@@ -550,6 +643,11 @@ SERVICES = [
 },
 {
   "slug":"smile-design","short":"smile","treatment":"Smile design / whitening",
+  "wa_msg":"Hi Roots Dental Care, I want details about smile design and pricing.",
+  "price_from":"From ₹5,999","emi":"Veneers from ₹8,999 · No-Cost EMI",
+  "price_copy":"Teeth whitening from ₹5,999. Veneers from ₹8,999 per tooth. Full smile makeover from ₹90,000. No-Cost EMI available. See your new smile on screen before we start.",
+  "reviews_head":"What smile makeover patients say",
+  "reviews":[("I saw my new smile on screen before we began. The veneers look completely natural.","Neha J.","Piplod"),("Whitening in one sitting before my wedding. Huge difference and no sensitivity.","Karan T.","Vesu")],
   "title":"Smile Design & Veneers in Althan, Surat | Roots Dental Care",
   "meta":"Smile makeovers in Althan, Surat, veneers, teeth whitening and digital smile design. See your new smile on screen before we begin. Natural, colour-matched results. Free consultation. Book appointment.",
   "og":"Veneers, whitening and digital smile design in Althan, Surat, see your new smile before we begin.",
@@ -581,7 +679,7 @@ SERVICES = [
     "cta":"Book a smile consult"},
   "faq_head":"Smile design in Surat, answered",
   "faqs":[
-    ("How much do veneers and teeth whitening cost in Surat?","It depends on how many teeth and the type of veneer or whitening. You will get the full plan and cost before starting, with no-cost EMI available, and the consultation is free this month."),
+    ("How much do veneers and teeth whitening cost in Surat?","Teeth whitening starts from ₹5,999, veneers from ₹8,999 per tooth, and a full smile makeover from ₹90,000. You see the plan and the exact cost before starting, with No-Cost EMI available. The consultation is free this month."),
     ("Will veneers look natural?","That is the whole point of designing digitally. We match shape and shade to your face and existing teeth, and you approve the preview first, the aim is natural, not obvious."),
     ("Do veneers ruin the teeth underneath?","Modern veneers are conservative and remove very little tooth structure, some need almost none. We only prepare what is necessary, and always explain exactly what is involved."),
     ("How long does a smile makeover take?","Whitening can be done in a single session. Veneers typically take two to three visits over a couple of weeks. A full makeover is planned so you know the timeline up front."),
@@ -594,6 +692,11 @@ SERVICES = [
 },
 {
   "slug":"kids-dentistry","short":"child's","treatment":"My child's teeth",
+  "wa_msg":"Hi Roots Dental Care, I want details about my child's dental visit.",
+  "price_from":"Free kids consult","emi":"Cavity filling from ₹999",
+  "price_copy":"Free kids consultation. Cavity filling from ₹999. Milk-tooth treatment with a cap from ₹3,499. Gentle, child-friendly care by a pediatric specialist.",
+  "reviews_head":"What parents say",
+  "reviews":[("My six-year-old was terrified. Dr. Neha was so patient that he now asks when we're going back.","Sneha K.","Piplod"),("Calm, gentle and never rushed. Exactly what an anxious child needs.","Farah M.","Adajan")],
   "title":"Kids' Dentistry in Althan, Surat | Roots Dental Care",
   "meta":"Child-friendly pediatric dentistry in Althan, Surat. Gentle check-ups, cavity fillings, fluoride and sealants, and calm care for anxious children, led by an MDS pediatric dentist. Free consultation. Book appointment.",
   "og":"Gentle pediatric dentistry in Althan, Surat, led by an MDS pediatric dentist. Calm care for anxious kids.",
@@ -628,7 +731,7 @@ SERVICES = [
     ("At what age should my child first see a dentist?","Ideally by their first birthday, or when the first teeth appear. Early visits are short and friendly, they catch problems while they are tiny, and they build a child who is not scared of the dentist."),
     ("My child is terrified of the dentist. How do you handle that?","Gently and without rushing. The first visit is often just about getting comfortable, meeting the chair, a count of the teeth. Most anxious children settle once they realise it does not hurt."),
     ("Baby teeth fall out anyway, are they worth treating?","Yes. Baby teeth hold the space for adult teeth and are needed for eating and speech. An untreated cavity can be painful and can affect the adult tooth forming underneath."),
-    ("How much does a child's filling or check-up cost?","We keep children's treatment affordable and tell you the cost up front. The first consultation is free this month."),
+    ("How much does a child's filling or check-up cost?","Your child's consultation is free this month. Cavity fillings start from ₹999 and a milk-tooth treatment with a cap from ₹3,499. We confirm the cost up front, with no hidden charges."),
     ("Do you use sedation for children?","Most children do beautifully with a calm, patient approach and need nothing more. Where a very nervous child or a bigger treatment calls for it, we will discuss safe options with you first."),
     ("Are sealants and fluoride really worth it?","For most children, yes. They are quick, painless and protect exactly the spots where cavities usually begin, cheaper and easier than treating a cavity later."),
   ],

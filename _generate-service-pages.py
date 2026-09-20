@@ -477,14 +477,107 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->'''
 
+# --- "What this treatment is" + "What happens if you delay it" + "Search stops here"
+EXTRA = {
+ "general-dentistry": {
+   "whatis_head": "What general dentistry covers",
+   "whatis_body": "General dentistry is your everyday dental care, check-ups, cleaning and polishing, tooth-coloured fillings, and sensitivity and early gum care. It keeps your teeth healthy and catches problems while they are still small, and most of it is done in a single visit.",
+   "delay_head": "What happens to your teeth if you wait",
+   "delay": [
+     "A small cavity is cheap and quick to fix, but left alone it reaches the nerve and needs a root canal or extraction.",
+     "Tartar build-up leads to bleeding gums, then gum disease, then loose teeth.",
+     "Sensitivity and small chips get worse and more expensive the longer they wait.",
+     "Skipping check-ups means problems are found late, when they cost far more time and money.",
+   ],
+   "stops_body": "If you want a reliable family dentist in Surat, stop here. A routine visit at Roots is backed by four specialists, so nothing has to be referred across the city.",
+ },
+ "root-canal": {
+   "whatis_head": "What a root canal actually is",
+   "whatis_body": "A root canal treats a tooth whose nerve has become infected or badly decayed. The infected pulp is cleaned out under a microscope, the canals are disinfected and sealed, and a crown protects the tooth. It relieves the pain and, most importantly, saves your natural tooth instead of removing it.",
+   "delay_head": "What happens if you delay a root canal",
+   "delay": [
+     "The infection spreads into the bone and can form a painful abscess.",
+     "A simple root canal turns into an extraction, then an implant or bridge, far more time and cost.",
+     "The pain gets worse and harder to control, often flaring at night.",
+     "You risk losing a tooth that could easily have been saved.",
+   ],
+   "stops_body": "In pain and searching for relief in Surat? Stop here. Our microscopic endodontist takes the difficult cases other clinics refer out, and we keep same-day slots for emergencies.",
+ },
+ "dental-implants": {
+   "whatis_head": "What a dental implant is",
+   "whatis_body": "A dental implant replaces a missing tooth from the root up. A small titanium post is placed in the jaw, it fuses with the bone, and a natural-looking tooth is fixed on top. It looks, feels and bites like your own tooth, and unlike a bridge it does not rely on grinding down the teeth beside it.",
+   "delay_head": "What happens if you delay an implant",
+   "delay": [
+     "The jawbone under a missing tooth shrinks over time, making implants harder and costlier later.",
+     "Neighbouring teeth drift into the gap and the bite goes off.",
+     "The opposing tooth over-erupts, and chewing shifts to one side.",
+     "One missing tooth left too long can turn into a bigger, costlier full-mouth problem.",
+   ],
+   "stops_body": "Looking for implants in Surat, or been told you do not have enough bone? Stop here. With 5,000+ implants placed and in-house bone grafting, the cases other clinics turn away are routine for us.",
+ },
+ "smile-design": {
+   "whatis_head": "What smile design is",
+   "whatis_body": "Smile design is cosmetic dentistry planned around your face, whitening, veneers and fine reshaping that fix stains, chips, gaps and worn edges. It is planned digitally, so you see your new smile on screen and approve it before any treatment begins.",
+   "delay_head": "What happens if you wait",
+   "delay": [
+     "Stains set deeper over time and become harder to whiten.",
+     "Small chips and cracks widen until they need a crown instead of a simple veneer.",
+     "Gaps and drifting teeth slowly change how your whole smile looks.",
+     "The longer you wait, the bigger, and costlier, the makeover becomes.",
+   ],
+   "stops_body": "Want a natural-looking smile makeover in Surat? Stop here. You see a digital preview first, and every smile is built on a healthy foundation by a full specialist clinic.",
+ },
+ "kids-dentistry": {
+   "whatis_head": "What kids' dentistry is",
+   "whatis_body": "Kids' dentistry is gentle, specialist dental care for children, friendly check-ups, cavity fillings, fluoride and sealants, and calm handling for anxious or first-time kids. It is led by a pediatric dentist who makes the chair feel safe and builds habits that protect the adult teeth.",
+   "delay_head": "What happens if you wait",
+   "delay": [
+     "A small cavity in a baby tooth can reach the nerve and become painful quickly.",
+     "Untreated decay can affect the adult tooth forming underneath.",
+     "A rushed or painful first visit can leave a fear of the dentist that lasts into adulthood.",
+     "Problems missed now often mean bigger treatment, and a more scared child, later.",
+   ],
+   "stops_body": "Looking for a gentle children's dentist in Surat? Stop here. An MDS pediatric specialist sets the pace by your child, so the first visit builds trust, not fear.",
+ },
+}
+
+def whatis(d):
+    x = EXTRA[d["slug"]]
+    return f'''<section class="block" id="about">
+  <div class="wrap">
+    <div class="sec-top reveal"><div><span class="eyebrow">In plain terms</span><h2>{esc(x["whatis_head"])}</h2></div></div>
+    <p class="whatis-copy reveal">{esc(x["whatis_body"])}</p>
+  </div>
+</section>'''
+
+def delay(d):
+    x = EXTRA[d["slug"]]
+    items = "".join(f'<div class="delay-item"><span class="dl-x">!</span><p>{esc(t)}</p></div>' for t in x["delay"])
+    return f'''<section class="block delay-band">
+  <div class="wrap">
+    <div class="sec-top reveal"><div><span class="eyebrow">Why not to wait</span><h2>{esc(x["delay_head"])}</h2></div><p>Small problems get bigger, and more expensive, the longer they wait.</p></div>
+    <div class="delay-grid reveal">{items}</div>
+  </div>
+</section>'''
+
+def stops(d):
+    x = EXTRA[d["slug"]]
+    return f'''<section class="stops-band reveal">
+  <div class="wrap stops-in">
+    <div><span class="eyebrow">Your search stops here</span><p class="stops-body">{esc(x["stops_body"])}</p></div>
+    <a href="#book-inline" class="btn btn-red" data-open-book>Book free consultation</a>
+  </div>
+</section>'''
+
 def page(d):
     parts = [head(d)]
     if d["slug"] == "root-canal":
         parts.append(RELIEF_BAR)
-    parts += [header(), hero(d), pricing_box(d), statsband(d), included(d), why(d)]
+    parts += [header(), hero(d), pricing_box(d), statsband(d),
+              whatis(d), included(d), delay(d), stops(d), why(d)]
     if d["slug"] == "dental-implants":
         parts.append(implants_extra())
-    parts += [specialist(d), offer_ribbon(), reviews_row(d), crosslinks(d["slug"]),
+    parts += [specialist(d), reviews_row(d), offer_ribbon(), crosslinks(d["slug"]),
               faqsection(d), location(), bookinline(d), footer(),
               FAB_SHEET, MOBILE_BAR, sheet(d),
               '<script src="/assets/js/main.js" defer></script>',
@@ -508,13 +601,15 @@ SERVICES = [
   "hero_sub":"Check-ups, cleaning, fillings and sensitivity care, done gently, priced up front, most finished in a single visit.",
   "eyebrow":"General & preventive dentistry",
   "stats":[("Same day","Most check-ups & fillings"),("Digital","X-rays on site"),("No-cost","EMI available"),("2000+","Families treated")],
-  "incl_head":"Everything your routine dental care needs",
+  "incl_head":"The advantages of routine care",
   "incl_intro":"The everyday treatments that keep small problems small, under one roof, by the doctor who trained for it.",
   "included":[
-    ("Check-ups & oral exams","A thorough look with digital X-rays, so nothing is missed and you know exactly where you stand."),
-    ("Scaling & polishing","Professional cleaning that lifts tartar and stains without harming enamel. The idea that scaling weakens teeth is a myth."),
-    ("Tooth-coloured fillings","Cavities repaired with fillings matched to your tooth, so the repair is invisible and the tooth stays strong."),
-    ("Sensitivity & early gum care","Sharp pain on cold or sweet, or gums that bleed when you brush, treated early before they turn into bigger, costlier problems."),
+    ("Fewer big treatments","Regular check-ups mean a filling instead of a root canal, and a cleaning instead of gum surgery."),
+    ("Problems caught early","Digital X-rays catch hidden problems before they hurt or cost more."),
+    ("Invisible fillings","Tooth-coloured fillings that no one can see, and that keep the tooth strong."),
+    ("Safe scaling","Scaling lifts tartar and stains safely. The idea that it weakens teeth is a myth."),
+    ("One honest opinion","We tell you what you need and what can wait, with no upselling."),
+    ("A specialist clinic behind you","Your entry to a four-specialist clinic, so if something bigger is found, the right doctor is already here."),
   ],
   "why_head":"Routine care that won't feel like the dentist you remember",
   "why_intro":"Why families in Althan, Vesu and Adajan make Roots their regular clinic.",

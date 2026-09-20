@@ -555,3 +555,18 @@ body.sheet-lock{overflow:hidden;}
   /* section headings not too huge on phones */
   h2{font-size:1.6rem;}
 }
+
+/* ===== service pages: What-this-is, Delay, Search-stops-here ===== */
+.whatis-copy{max-width:70ch; color:var(--ink); font-size:1.1rem; line-height:1.75;}
+.delay-band{background:var(--gold-tint); border-top:1px solid #EBD9AE; border-bottom:1px solid #EBD9AE;}
+.delay-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px 22px;}
+.delay-item{display:flex; gap:12px; align-items:flex-start; background:var(--white); border:1px solid #EBD9AE; border-radius:12px; padding:15px 16px;}
+.delay-item .dl-x{flex:none; width:24px; height:24px; border-radius:50%; background:var(--gold); color:#3a2d10; font-weight:800; display:grid; place-items:center; font-size:.9rem; margin-top:1px;}
+.delay-item p{color:var(--ink); font-size:.93rem; line-height:1.55;}
+@media(max-width:760px){ .delay-grid{grid-template-columns:1fr;} }
+.stops-band{background:linear-gradient(135deg,#0B3B40 0%,#006D75 100%); color:#EAF6F5;}
+.stops-in{display:flex; align-items:center; justify-content:space-between; gap:26px; flex-wrap:wrap; padding:32px 0;}
+.stops-in .eyebrow{color:#7FE0E6;}
+.stops-body{max-width:62ch; margin-top:8px; font-family:var(--head); font-weight:500; font-size:1.08rem; line-height:1.5; color:#fff;}
+.stops-in .btn{flex:none;}
+@media(max-width:700px){ .stops-in{flex-direction:column; align-items:flex-start; gap:18px;} .stops-in .btn{width:100%;} }

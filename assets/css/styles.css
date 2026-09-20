@@ -531,3 +531,27 @@ body.sheet-lock{overflow:hidden;}
 .price-strip a:hover{border-color:var(--teal); color:var(--teal);}
 .price-strip .ps-emi{margin-left:auto; color:var(--gold-deep); font-weight:600; font-size:.84rem;}
 @media(max-width:760px){ .price-strip-in{flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;} .price-strip a{white-space:nowrap;} .price-strip .ps-emi{margin-left:12px; white-space:nowrap;} }
+
+/* ===== mobile polish (<=600px): tighter hero, better rhythm, table fit ===== */
+@media(max-width:600px){
+  .hero-content{padding-top:26px; padding-bottom:32px; gap:18px;}
+  .hero-video{min-height:auto;}
+  .hero-page .hero-content{min-height:auto;}
+  .hero-content h1{font-size:1.95rem; line-height:1.1; margin:10px 0 12px; max-width:100%;}
+  .hero-content h1 .accent .swoosh{bottom:-.24em; height:.34em;}
+  .hero-sub{font-size:.97rem; line-height:1.45; max-width:100%;}
+  .hero-cta{gap:10px; margin-top:18px;}
+  .hero-cta .btn{width:100%; padding:14px 18px; font-size:.92rem;}
+  .rating-line{font-size:.8rem; margin-top:12px;}
+  .hero-form{padding:18px 16px;}
+  .hero-form h3{font-size:1.14rem;}
+  .offer-tag{font-size:.78rem; padding:6px 12px; margin-bottom:14px; line-height:1.35;}
+  /* comparison table: fit the phone width, no awkward scroll */
+  .ctable{min-width:0; font-size:.82rem;}
+  .ctable th,.ctable td{padding:9px 8px;}
+  /* pricing box: a touch tighter */
+  .price-card{padding:22px 20px;}
+  .price-from{font-size:1.85rem;}
+  /* section headings not too huge on phones */
+  h2{font-size:1.6rem;}
+}

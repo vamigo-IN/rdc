@@ -569,6 +569,47 @@ def stops(d):
   </div>
 </section>'''
 
+# Real before/after cases, from the clinic's own patients (feedback PDF).
+CASES = {
+  "smile-design": [
+    ("sd-case-1.jpg", "Worn, spaced upper teeth rebuilt with veneers, planned on screen before we started."),
+    ("sd-case-2.jpg", "A gap between the front teeth (diastema) closed with veneers."),
+    ("sd-case-3.jpg", "A crowded, uneven smile straightened and evened out."),
+  ],
+  "dental-implants": [
+    ("impl-case-1.jpg", "A missing back tooth replaced with a fixed bridge, the gap gone."),
+    ("impl-case-2.jpg", "Implants placed for missing molars, without grinding down the healthy teeth beside them."),
+    ("impl-case-3.jpg", "Implant crowns that blend in with the natural teeth around them."),
+  ],
+  "root-canal": [
+    ("rc-case-1.jpg", "Badly decayed teeth saved with root canals and crowned, not pulled."),
+  ],
+  "kids-dentistry": [
+    ("kids-case-1.jpg", "A decayed baby molar treated and capped with a white crown."),
+    ("kids-case-2.jpg", "Front teeth with early decay restored back to white."),
+    ("kids-case-3.jpg", "Crowded upper teeth in a child, guided into place."),
+  ],
+}
+
+def cases(d):
+    items = CASES.get(d["slug"])
+    if not items:
+        return ""
+    cards = "".join(
+        f'<figure class="case-card"><img src="/assets/img/cases/{fn}" alt="{esc(cap)}" loading="lazy">'
+        f'<figcaption class="case-cap">{esc(cap)}</figcaption></figure>'
+        for fn, cap in items)
+    return f'''<section class="block cases-band" id="results">
+  <div class="wrap">
+    <div class="sec-top reveal">
+      <div><span class="eyebrow">Real results</span><h2>Before and after, our own patients</h2></div>
+      <p>A few recent cases from the clinic. Not stock photos, not someone else\'s work.</p>
+    </div>
+    <div class="case-grid reveal">{cards}</div>
+    <p class="case-note reveal">Real patients treated at Roots Dental Care, Althan. Shared with consent. Every mouth is different, so individual results vary.</p>
+  </div>
+</section>'''
+
 def page(d):
     parts = [head(d)]
     if d["slug"] == "root-canal":
@@ -577,7 +618,7 @@ def page(d):
               whatis(d), included(d), delay(d), stops(d), why(d)]
     if d["slug"] == "dental-implants":
         parts.append(implants_extra())
-    parts += [specialist(d), reviews_row(d), offer_ribbon(), crosslinks(d["slug"]),
+    parts += [cases(d), specialist(d), reviews_row(d), offer_ribbon(), crosslinks(d["slug"]),
               faqsection(d), location(), bookinline(d), footer(),
               FAB_SHEET, MOBILE_BAR, sheet(d),
               '<script src="/assets/js/main.js" defer></script>',

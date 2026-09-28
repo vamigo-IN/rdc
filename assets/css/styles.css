@@ -593,3 +593,25 @@ body.sheet-lock{overflow:hidden;}
   .ba-section { padding: 60px 0; }
   .ba-header h2 { font-size: 1.8rem; }
 }
+
+/* ===== mobile: stack section headers so H2 spans full width above its intro ===== */
+@media(max-width:700px){
+  .sec-top{flex-direction:column; align-items:flex-start; gap:10px; margin-bottom:24px;}
+  .sec-top h2{max-width:100%;}
+  .sec-top p{max-width:100%; margin-top:0;}
+  .sec-top-center{align-items:center;}
+  .sec-top-center p{max-width:100%;}
+}
+
+/* ===== Real results: before/after case galleries (service pages) ===== */
+.cases-band{background:linear-gradient(180deg,#0B3B40 0%,#0e2a2d 100%); color:#EAF6F5;}
+.cases-band .eyebrow{color:#7FE0E6;}
+.cases-band h2{color:#fff;}
+.cases-band .sec-top p{color:#bfe0e1;}
+.case-grid{columns:3; column-gap:20px; margin-top:4px;}
+.case-card{break-inside:avoid; margin:0 0 20px; background:#0f2a2d; border:1px solid rgba(255,255,255,.10); border-radius:14px; overflow:hidden;}
+.case-card img{display:block; width:100%; height:auto;}
+.case-cap{padding:13px 15px 15px; font-size:.9rem; line-height:1.5; color:#cfe6e6;}
+.case-note{margin-top:14px; font-size:.84rem; color:#8fb9ba;}
+@media(max-width:900px){ .case-grid{columns:2;} }
+@media(max-width:600px){ .case-grid{columns:1;} }

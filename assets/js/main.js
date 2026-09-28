@@ -141,7 +141,7 @@
   // Works for BOTH the popup form and the inline fallback form (fields by name).
   // The lead is saved to the Google Sheet FIRST; WhatsApp opens only after that
   // request has completed, so the row is never lost if the visitor leaves.
-  function handleSubmit(e) {
+    function handleSubmit(e) {
     e.preventDefault();
     var form = e.currentTarget;
     var name = form.querySelector('[name="name"]');
@@ -154,7 +154,6 @@
     if (!ok) { (name.value.trim() ? phone : name).focus(); return; }
 
     var tEl = form.querySelector('[name="treatment"]'), timeEl = form.querySelector('[name="time"]');
-    // Which form on the page it came from, for lead attribution in the sheet.
     var src = form.closest("#booking") ? "Popup" :
               form.closest("#book-hero") ? "Hero form" :
               form.closest("#book-inline") ? "Inline form" : "Form";
@@ -166,33 +165,25 @@
       source: src
     };
 
-    // Button "Sending…" state while the row is written.
     var btn = form.querySelector('button[type="submit"]');
     var btnHtml = btn ? btn.innerHTML : "";
     if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
 
-    function proceed() {
+    sendToSheet(data).then(function(resData) {
       sendEmail(data);
       track("lead_submit");
+      if (btn) { btn.innerHTML = "Sent!"; }
       var okBox = form.parentNode.querySelector(".form-ok");
-      if (okBox) okBox.style.display = "block";
-      if (btn) { btn.disabled = false; btn.innerHTML = btnHtml; }
+      if (okBox) { okBox.style.display = "block"; okBox.textContent = "Thank you. We have your details and will call or email you shortly."; }
       try { form.reset(); } catch (_) {}
-    }
-
-    // Save the lead to the sheet (+ email), then show the confirmation.
-    // No WhatsApp redirect. Resolves either way (success, network error, or the
-    // 8s timeout) so the visitor always sees the confirmation.
-    sendToSheet(data).then(proceed, proceed);
-  }
-
-  // Track taps on any WhatsApp / call button too.
-  function wireCtaTracking() {
-    document.querySelectorAll('a[href^="https://wa.me/"], a[data-wa]').forEach(function (a) {
-      a.addEventListener("click", function () { track("whatsapp_click"); });
-    });
-    document.querySelectorAll('a[href^="tel:"]').forEach(function (a) {
-      a.addEventListener("click", function () { track("call_click"); });
+    }).catch(function(err) {
+      // Fallback
+      sendEmail(data);
+      track("lead_submit");
+      if (btn) { btn.disabled = false; btn.innerHTML = btnHtml; }
+      var okBox = form.parentNode.querySelector(".form-ok");
+      if (okBox) { okBox.style.display = "block"; okBox.textContent = "Thank you. We have your details and will call or email you shortly."; }
+      try { form.reset(); } catch (_) {}
     });
   }
 

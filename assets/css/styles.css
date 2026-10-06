@@ -615,3 +615,24 @@ body.sheet-lock{overflow:hidden;}
 .case-note{margin-top:14px; font-size:.84rem; color:#8fb9ba;}
 @media(max-width:900px){ .case-grid{columns:2;} }
 @media(max-width:600px){ .case-grid{columns:1;} }
+
+/* Navratri Modal */
+.modal-backdrop {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(8, 43, 47, 0.8); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  z-index: 9999; display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal-content {
+  background: var(--white); border-radius: 16px; padding: 40px; text-align: center;
+  max-width: 420px; width: 100%; position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  border-top: 4px solid var(--gold);
+}
+.modal-close {
+  position: absolute; top: 12px; right: 12px; background: none; border: none;
+  font-size: 1.2rem; color: var(--muted); cursor: pointer; padding: 8px;
+}
+.modal-content h3 { font-family: var(--head); color: var(--heading); font-size: 1.8rem; margin-bottom: 12px; }
+.modal-content p { color: var(--ink); margin-bottom: 24px; font-size: 1.1rem; }
+.modal-content .btn { width: 100%; }

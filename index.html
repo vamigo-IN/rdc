@@ -18,12 +18,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Roots Dental Care">
 <meta property="og:title" content="Roots Dental Care, Painless Dental Care in Althan, Surat">
-<meta property="og:description" content="Pain-free dentistry that feels different. Trusted by 2000+ families. Free consultation this month.">
+<meta property="og:description" content="Pain-free dentistry that feels different. Trusted by 20000+ families. Free consultation this month.">
 <meta property="og:url" content="https://rootsdentalcaresurat.com/">
 <meta property="og:image" content="https://rootsdentalcaresurat.com/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Roots Dental Care, Painless Dental Care in Althan, Surat">
-<meta name="twitter:description" content="Pain-free dentistry that feels different. Trusted by 2000+ families in Surat.">
+<meta name="twitter:description" content="Pain-free dentistry that feels different. Trusted by 20000+ families in Surat.">
 <meta name="twitter:image" content="https://rootsdentalcaresurat.com/assets/img/og.png">
 
 <link rel="icon" type="image/png" href="/assets/img/favicon-64.png">
@@ -130,7 +130,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h1>Pain-Free Dentistry<br><span class="accent">That Feels Different
         <svg class="swoosh" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true"><path d="M3 13C60 5 150 3 297 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
       </span></h1>
-      <p class="hero-sub">Trusted by 2000+ families &nbsp;|&nbsp; Next-Gen Technology &nbsp;|&nbsp; Offered by few in India</p>
+      <p class="hero-sub">Trusted by 20000+ families &nbsp;|&nbsp; Next-Gen Technology &nbsp;|&nbsp; Offered by few in India</p>
       <div class="hero-cta">
         <a href="tel:+917990376179" class="btn btn-glass">Call 79903 76179</a>
         <a class="btn btn-wapp" data-wa data-wa-msg="Hi Roots Dental Care, I'd like to book a visit." href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
@@ -173,7 +173,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ===== STATS BAND ===== -->
 <section class="stats">
   <div class="wrap stats-grid">
-    <div class="stat"><b>2000+</b><span>Families treated</span></div>
+    <div class="stat"><b>20000+</b><span>Patients treated</span></div>
     <div class="stat"><b>4</b><span>Expert specialists</span></div>
     <div class="stat"><b>10000+</b><span>Treatments done</span></div>
     <div class="stat"><b>No-cost</b><span>EMI available</span></div>
@@ -512,5 +512,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <a class="mb-btn mb-wa" data-wa href="#" target="_blank" rel="noopener">WhatsApp</a>
 </div>
 <script src="/assets/js/main.js?v=1790574821" defer></script>
+
+<div id="navratri-modal" class="modal-backdrop" style="display: none;">
+  <div class="modal-content">
+    <button class="modal-close" onclick="document.getElementById('navratri-modal').style.display='none'">✕</button>
+    <h3>Navratri Special Offer!</h3>
+    <p>Get <strong>25% off</strong> on all treatment services this festive season.</p>
+    <a href="#book-inline" class="btn btn-red" onclick="document.getElementById('navratri-modal').style.display='none'" data-open-book>Claim Offer</a>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (!sessionStorage.getItem('navratri_seen')) {
+      document.getElementById('navratri-modal').style.display = 'flex';
+      sessionStorage.setItem('navratri_seen', 'true');
+    } else {
+      document.getElementById('navratri-modal').style.display = 'none';
+    }
+  });
+</script>
 </body>
 </html>

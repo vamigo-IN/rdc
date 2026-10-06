@@ -636,3 +636,11 @@ body.sheet-lock{overflow:hidden;}
 .modal-content h3 { font-family: var(--head); color: var(--heading); font-size: 1.8rem; margin-bottom: 12px; }
 .modal-content p { color: var(--ink); margin-bottom: 24px; font-size: 1.1rem; }
 .modal-content .btn { width: 100%; }
+
+/* Reviews Marquee */
+.rev-marquee-wrap { overflow: hidden; position: relative; width: 100%; padding-bottom: 20px; }
+.rev-marquee { display: flex; gap: 18px; width: max-content; padding: 0 18px; animation: scrollMarquee 90s linear infinite; }
+.rev-marquee:hover { animation-play-state: paused; }
+.rev-marquee .rev { width: 340px; flex-shrink: 0; white-space: normal; display: flex; flex-direction: column; }
+.rev-marquee .rev p { flex-grow: 1; }
+@keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 9px)); } }
